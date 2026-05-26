@@ -1,285 +1,266 @@
 # Best CRM Integration for Shopify 2026
 
-Klaviyo claims [Shopify](/resources/datacops-shopify) stores using it well grow GMV by around **22%**. **That number is real, and it is also the reason every CRM comparison article for Shopify is built wrong.** They all chase the same question - HubSpot or Klaviyo, email-first or sales-first - and they all skip the question that actually decides whether your CRM data is worth anything.
+Here's what every CRM comparison guide misses: the data that lands in your CRM is incomplete. And you're optimizing off it anyway.
 
-Here is that question. **Where does the customer data in your CRM come from, and is any of it filtered before it lands?**
+Shopify syncs your orders. Your CRM gets the customer record. Looks great. But it doesn't tell you which ad drove the click that converted that customer. It doesn't attach the consent status that determines whether you can legally push that customer to Meta Custom Audiences. It doesn't show you which of those customer records are real humans versus bot signups padding your list.
 
-Because a CRM does not collect data. It receives data. It receives whatever your Shopify store, your pixels, and your tracking scripts hand it. And what they hand it is a mix:
+Your CRM is only as good as what flows into it.
 
-- Real buyers
-- Blocked sessions
-- Missing events
-- A thick layer of bot traffic
+I went through every major CRM integration for Shopify, tested the ones I could, and talked to operators running real stores. Here's the honest version.
 
-Your CRM then dutifully syncs that mix to Meta and Google as if every record were a person.
+---
 
-This is not a CRM ranking dressed up. It is a post about the gap every CRM ranking ignores: **CRMs are downstream of a data pipeline nobody audited.** I will rank the tools honestly. But the tool that fixes the gap is not a CRM at all. It is the [first-party data layer](/conversion-api) in front of it, with [bot filtering](/fraud-traffic-validation), [HubSpot AI lead scoring](/hubspot-ai-lead-scoring), and clean dispatch into [Meta CAPI](/meta-conversion-api). That is [DataCops](/conversion-api).
+## Why the "Klaviyo vs HubSpot" debate misses the point.
 
-## Quick stuff people keep asking
+Every CRM guide frames the decision as: Klaviyo for ecommerce, HubSpot for sales teams. That's true. But it's not the most important question.
 
-**What is the best CRM for Shopify?** For most stores under enterprise scale, Klaviyo - it is the deepest native Shopify integration and the email and SMS engine where ecommerce revenue actually gets made. HubSpot wins when you have a sales motion alongside the store. But "best CRM" answers the wrong question if your tracking layer is feeding it garbage.
+The most important question is: what data is actually flowing into your CRM, and is it enough to make good decisions?
 
-**Should I use HubSpot or Klaviyo for my Shopify store?** Klaviyo if you are a pure ecommerce brand living on flows, segmentation, and lifecycle email. HubSpot if you have salespeople, a B2B side, or a longer deal cycle and need a real pipeline. Architecturally they are different animals - Klaviyo is email-first, HubSpot is CRM-first.
+Klaviyo syncs Shopify data in under 200ms. It gives you product activity, browse abandonment, checkout abandonment, 80+ pre-built ecommerce flows. Shopify brands using Klaviyo report a 22% increase in GMV growth rate. That's a real number, not marketing fluff.
 
-**How does Klaviyo integrate with Shopify?** Native, deep, near real-time. It pulls orders, customers, browsing and checkout events, and product catalog straight from Shopify with no middleware. It is the smoothest CRM sync in the ecosystem - which is exactly why the quality of the events Shopify emits matters so much.
+HubSpot's Shopify sync improved significantly in 2026. Better order-to-contact mapping. Custom property support. But it still lacks ecommerce depth. HubSpot is built for sales pipeline management. It's excellent at that. It's not built to understand what a repurchase probability score means or how to trigger a Recharge subscription win-back flow.
 
-**Can I connect multiple CRMs to Shopify?** Technically yes, and plenty of stores do - Klaviyo for lifecycle, a sales CRM for wholesale. The risk is each tool builds its own slightly different version of the customer, and none of them filter bots, so you multiply the contamination instead of resolving it.
+But here's where both fall short. They sync orders, customers, and browsing behavior. They don't enrich that data with the behavioral and attribution context that makes it actionable for ad platforms.
 
-**What customer data syncs from Shopify to CRM?** Orders, customer profiles, checkout and cart events, product views, fulfillment status. All of it event-driven. And every one of those events is only as trustworthy as the tracking layer that captured it - which by default is not trustworthy at all.
+Your Klaviyo audience for Meta retargeting is only as good as the consent signals attached to it. Your HubSpot contact list for LinkedIn ads only works if the match quality is high enough for the platform to find the person. Your Salesforce CRM data is only useful for optimization if you know which source drove each contact.
 
-## The gap - your CRM trusts every event Shopify hands it
+None of these CRMs solve that problem natively. That's not a criticism. It's an architectural reality. The consent layer, the server-side event enrichment, the match quality optimization: those live outside the CRM.
 
-Walk the pipeline. A visitor lands on a Shopify product page. Client-side scripts fire. Events flow to your CRM and onward to Meta and Google. Your CRM treats every one of those events as a human with intent.
+---
 
-Now the numbers nobody puts in the CRM comparison. Of the traffic hitting your store, 24 to **31%** is bots. Shopify product pages are among the most scraped pages on the open internet - price monitors, inventory checkers, competitor scrapers, AI agents.
+## The first-party data imperative.
 
-They generate product views. Some generate add-to-cart events. A few generate checkout starts. Your CRM cannot tell the difference, so it logs them all as customer behavior.
+Here's the stat that should be driving your CRM strategy: 71% of brands are actively growing first-party datasets and project 35% growth in the next 12 months.
 
-If you serve EU traffic, it gets worse before it gets better. Your consent banner is a third-party script, and uBlock and Brave block it on 30 to **40%** of privacy-conscious sessions. On a Shopify theme that behaves like a single-page app, the banner races the page - events fire before consent resolves.
+And brands using first-party data reduce paid media spend by up to 50%.
 
-So your "consented" data is partly unconsented and your "rejected" sessions threw away analytics you were always legally allowed to keep. And your tracking scripts themselves get blocked outright on another 25 to **35%** of sessions. The CRM sees a clean, confident stream. The reality feeding it is full of holes and full of bots.
+First-party data is email, SMS, loyalty, purchase history, product preferences. Collected directly from the customer. Owned by you. No third-party intermediary.
 
-Here is the proof moment. PillarlabAI built a honeypot - a [fake signup](/signup-cops) flow designed to attract automated traffic. 3,000 signups came in. **77%** were fraudulent. 650 accounts traced to a single device fingerprint. One machine, 650 fake people, every one looking like a high-intent lead.
+Your CRM is the hub for this. But the CRM alone doesn't complete the picture. You need server-side tracking to tie the behavioral data (which ads drove which sessions) to the CRM record. You need a consent layer to make that data legally usable in ad platforms under GDPR and CCPA. And you need identity resolution to connect cross-device journeys into a unified customer profile.
 
-Push that into a Shopify CRM stack. Those 650 land as 650 contacts. Klaviyo or HubSpot adds them to flows.
+Shopify released its Customer Privacy API in 2025 to help with the consent angle. It enables CRM + consent integration without a separate CMP. That's genuinely useful. But it only handles the consent flag. It doesn't handle the server-side event enrichment or the match quality optimization for Meta and Google.
 
-They get synced to Meta and Google as conversions. And now layer five kicks in: the ad algorithms study those bot conversions, build a model of "your customer" partly out of bots, and spend your budget chasing more traffic exactly like it. More bots.
+---
 
-Your reported conversions look fine. Your actual ROAS quietly bleeds. The CRM did everything right. The pipeline upstream of it was never clean.
+## The CRM tools. Honest breakdown.
 
-A CRM cannot close this gap. It is structurally downstream of it. The fix is architectural: collect events first-party on your own subdomain, filter bots at the moment of ingestion before anything leaves your infrastructure, split data into two tiers at the source - anonymous session analytics that run unconditionally because they are always legal, and identifiable events that wait for real consent - and forward only clean, human, consented conversions to the ad platforms.
+I'm covering both the CRM platforms and the tracking tools that need to sit alongside them. Because if you pick Klaviyo but your server-side CAPI is broken, you're retargeting off incomplete audience data.
 
-That is what DataCops does. It does not replace Klaviyo or HubSpot. It cleans the stream that feeds them.
+---
 
-## Tool rankings - Shopify CRM and tracking layer, tiered
+**1. Klaviyo (email + SMS + ecommerce CRM)**
 
-These tools split into two groups people wrongly treat as one. CRMs (Klaviyo, HubSpot, Salesforce, Zoho, ActiveCampaign) own the customer relationship. The CAPI and tracking tools ([Elevar](/alternative/elevar-alternative), [Triple Whale](/alternative/triple-whale-alternative), and the rest) own the event delivery pipeline. The honest read is that almost every tool in the second group captures events brilliantly and filters none of them.
+The Good: Sub-200ms Shopify sync. 80+ pre-built ecommerce flows. Predictive analytics: expected date of next order, churn risk, CLV modeling. 22% GMV growth rate reported across Shopify brands. Browse abandonment, checkout abandonment, product activity all tracked natively.
 
-### Tier 1 - the trust layer
+Frustrations: Not a full CRM. No sales pipeline. No deal tracking. Poor fit for B2B or multi-channel businesses with a sales team component. Pricing scales fast: SMS costs add up separately from email. Some merchants report the 90-day historical sync taking days for large catalogs.
 
-**DataCops.**
+Wish List: Native sales pipeline features for DTC brands moving toward wholesale. Tighter server-side consent integration without needing a separate CMP.
 
-**What it is:** a first-party data layer running on your own subdomain.
+Value for Money: 8/10. If you're pure Shopify DTC, this is the obvious choice. The ecommerce depth isn't matched by anyone else in the space.
 
-**What it does well:** filters bots at ingestion against a 361.8 billion-plus IP database, splits data into anonymous and consent-gated tiers, and forwards clean conversions to Meta, Google, TikTok, and LinkedIn via CAPI. It is the only tool here that inspects whether an event is human before anyone - CRM or ad platform - gets to act on it. SignUp Cops adds identity intelligence at signup, useful for any store fighting [fake accounts](/resources/best-fake-account-detection-2026) and promo abuse.
+Pricing: Email free to 500 contacts; Email + SMS plans scale from ~$20/mo at 500 contacts to several hundred per month at scale. Usage-based on contacts and sends.
 
-**Where it breaks:** it is not a CRM. It will not run your email flows or your sales pipeline - pair it with Klaviyo or HubSpot, do not pick between them. Newer brand, and SOC 2 Type II is in progress. Shared CAPI across platforms is in verification. Free tier covers 2,000 signup verifications a month.
+---
 
-**Value for money:** 9/10.
+**2. HubSpot (full CRM + marketing + sales)**
 
-**[Pricing](/pricing):** free tier, paid plans scale up modestly.
+The Good: 2,000+ integrations. Sales pipeline management. Full CRM with deal tracking, sequences, and meeting scheduling. Enhanced Shopify sync released in 2026 with improved order-to-contact mapping and custom property support. Scales from startup to enterprise.
 
-### Tier 2 - CRMs that earn their place
+Frustrations: Ecommerce depth is genuinely weaker than Klaviyo. Browse abandonment tracking is limited. The 80+ ecommerce-specific Klaviyo flows don't have a direct equivalent. Business tier pricing adds up fast: Marketing Hub Professional starts at $890/mo. Full Sales + Marketing + Service stack can run $1,500 to $5,000+/mo for growing teams.
 
-**Klaviyo.**
+Wish List: Deeper native Shopify analytics. Ecommerce-specific flow builder that matches Klaviyo's catalog.
 
-**What it is:** the email and SMS CRM built for ecommerce.
+Value for Money: 7.5/10. Gold for multi-channel businesses with a sales team. Not the right fit for ecommerce-only brands who need deep flow and segmentation capabilities.
 
-**What it does well:** the deepest native Shopify integration there is, near-real-time sync, segmentation and flows that reliably move GMV - the ~**22%** growth figure is not a fantasy for stores that use it properly.
+Pricing: Free CRM core (limited). Starter Hub bundles from $15/mo. Professional from $890/mo (Marketing). Enterprise from $3,600/mo.
 
-**Where it breaks:** it ingests whatever Shopify and its own client-side tracking hand it, with no bot filtering. Bot-driven product views and abandoned carts become flow triggers and "engaged" segments. Its server-side event coverage exists but is consent-configuration-dependent. Klaviyo amplifies your data - it does not clean it.
+---
 
-**Value for money:** 8/10.
+**3. Salesforce (enterprise CRM)**
 
-**Pricing:** free up to 250 contacts, scaling by contact count and channel.
+The Good: Multi-store consolidation for enterprise brands running multiple Shopify storefronts. Most mature CRM platform on the market. Commerce Cloud integration gives unified view across POS, ecommerce, and enterprise sales. Handles complex B2B + B2C hybrid use cases that Klaviyo and HubSpot can't.
 
-**HubSpot.**
+Frustrations: Implementation runs 3 to 6 months minimum. Requires a Salesforce admin or a certified partner. Salesforce licensing isn't cheap: Essentials starts at $25/user/mo but anything useful starts at $75 to $150+/user/mo. Total cost of ownership for a mid-market ecommerce team regularly hits $5K to $20K+/mo all-in.
 
-**What it is:** a CRM-first platform with marketing, sales, and service built around a pipeline.
+Wish List: A credible mid-market tier that doesn't require six months and a systems integrator to implement. Faster Shopify native connector without Commerce Cloud overhead.
 
-**What it does well:** genuine sales-pipeline depth, strong automation, the right pick when your Shopify store sits alongside a sales motion or a B2B arm. The Shopify sync covers customers, orders, and products cleanly.
+Value for Money: 6.5/10. Unambiguous enterprise choice for $10M+ GMV brands with complex sales structures. Complete overkill for the vast majority of Shopify stores.
 
-**Where it breaks:** HubSpot's tracking is client-side and consent-gated like the rest, with no bot filtering - fake contacts and bot sessions enter the CRM and the workflows. Pricing escalates hard once you move past Starter into the tiers where the automation actually lives.
+Pricing: Essentials $25/user/mo. Professional $80/user/mo. Enterprise $165/user/mo. Commerce Cloud custom-quoted. Implementation separate.
 
-**Value for money:** 7/10.
+---
 
-**Pricing:** free CRM tier, paid hubs climb steeply.
+**4. Zoho CRM (budget alternative)**
 
-### Tier 3 - situational CRM picks
+The Good: Cheapest serious CRM on the market. Standard tier $14/user/mo covers most small business needs. Shopify integration available through Zapier and native connectors. Covers sales pipeline, email, lead scoring. 40+ integrations in the base plan.
 
-**Salesforce.**
+Frustrations: Ecommerce depth is minimal. No meaningful browse abandonment or predictive CLV without heavy customization. UI feels dated compared to HubSpot and Klaviyo. The Shopify connector is reliable but basic: orders and contacts, not behavioral events.
 
-**What it is:** the enterprise CRM standard, connected to Shopify via Commerce Cloud or connectors.
+Wish List: Native ecommerce event tracking. Better Shopify flow templates.
 
-**What it does well:** unlimited customization, enterprise governance, the only sane choice for a large or complex org.
+Value for Money: 6.5/10. If budget is the constraint and you don't need ecommerce-specific flows, it works. Just know what you're giving up.
 
-**Where it breaks:** heavy, expensive, slow to implement - overkill for most independent Shopify stores. And like every CRM here, it trusts the events it receives; the data-quality gap is upstream and Salesforce does not touch it.
+Pricing: Free up to 3 users. Standard $14/user/mo. Professional $23/user/mo. Enterprise $40/user/mo.
 
-**Value for money:** 6/10 for enterprise, 3/10 for a typical store.
+---
 
-**Pricing:** enterprise contracts, per-seat plus add-ons.
+**5. ActiveCampaign (automation-focused CRM + email)**
 
-**Zoho CRM.**
+The Good: Best automation builder of any CRM in this list. Conditional logic, split testing, and multi-channel sequences that rival Klaviyo's flow builder. Shopify integration is solid. CRM + email + SMS in one platform. Starting price is competitive.
 
-**What it is:** the budget all-rounder.
+Frustrations: Less ecommerce-specific than Klaviyo. Predictive analytics are weaker. Browse abandonment tracking requires more setup. The CRM piece is lighter than HubSpot's on deal management and pipeline visualization.
 
-**What it does well:** genuinely cheap, broad feature set, a reasonable Shopify connector - fine for a small store that wants a CRM without a real budget line.
+Wish List: Deeper Shopify predictive analytics. More pre-built ecommerce-specific triggers.
 
-**Where it breaks:** the Shopify integration is shallower and less real-time than Klaviyo's, the ecommerce-specific automation is thinner, and - same story - no bot filtering on inbound data.
+Value for Money: 7.5/10. If you need powerful automation across multiple channels and you're not a pure DTC brand, this is a serious contender. Underrated in the Shopify CRM conversation.
 
-**Value for money:** 6/10 for budget buyers.
+Pricing: Starter from $15/mo (1K contacts). Plus from $49/mo. Professional from $79/mo. Enterprise custom.
 
-**Pricing:** low monthly per-user tiers, free for very small teams.
+---
 
-**ActiveCampaign.**
+## The tracking tools that make your CRM data complete.
 
-**What it is:** a marketing-automation-led CRM with strong workflow tooling.
+Your CRM is the destination. These are the tools that determine whether the data that flows into it is complete enough to act on.
 
-**What it does well:** some of the best visual automation builders in the category, solid email, a workable Shopify integration for stores that live and die by lifecycle automation.
+---
 
-**Where it breaks:** less ecommerce-native than Klaviyo, and the same structural truth - it automates against whatever data it is fed, bots included.
+**6. Elevar (server-side CAPI + CRM event enrichment)**
 
-**Value for money:** 6/10.
+The Good: Powers conversion tracking for 6,500+ DTC Shopify brands. Session Enrichment feeds enriched event data to Klaviyo flows. Deep native integrations: Meta, Google, TikTok, Klaviyo, Pinterest. Free Starter tier up to 100 orders/mo.
 
-**Pricing:** tiered by contacts and feature level.
+Frustrations: Setup is complicated. Most brands end up paying $1,000+ for Expert Installation or $500/mo for ongoing tag support. Funnels have unresolved Google Analytics API issues. Communication lag from support during incidents.
 
-### The tracking and CAPI layer - where the data is captured, and not cleaned
+Wish List: Transparent overage caps. More intuitive funnels/dashboards.
 
-**Elevar.**
+Value for Money: 7.5/10. If you're serious about Shopify CAPI and Klaviyo enrichment, this is the benchmark. Just budget for setup help.
 
-**What it is:** the most widely adopted [server-side tracking](/resources/best-server-side-tracking-2026) solution for Shopify, trusted by 6,500-plus DTC brands.
+Pricing: Starter $0 (100 orders/mo), Essentials $200/mo, Growth $450/mo, Business $950/mo.
 
-**What it does well:** the deepest data-layer and Shopify CAPI implementation in the category - Meta, Google, TikTok, Klaviyo, [GA4](/alternative/ga4-alternative), all server-side.
+---
 
-**Where it breaks:** it forwards everything, including bots. It has the best event capture in the market and no data-quality layer to match it, so 6,500-plus brands are delivering contaminated signals to Meta with excellent fidelity. March 2026 price increases pushed Essentials to **$200/month** and Business to **$950/month**, and the July 2025 Audiense acquisition added a three-layer corporate structure that complicated procurement.
+**7. Littledata (Shopify data layer for CRM accuracy)**
 
-**Value for money:** 5/10 - best capture, zero filtering.
+The Good: Strongest Shopify checkout-extensibility data layer available. Fixes the inconsistent events that Shopify's native pixel sends to GA4, Meta, and Klaviyo. Subscription-aware: tracks Recharge lifecycle events that most tools miss. 4.8 stars on Shopify App Store.
 
-**Pricing:** Essentials **$200/month**, Business **$950/month**.
+Frustrations: Per-order pricing punishes high-AOV/low-volume brands. Recharge integration has known reliability gaps. Some 1-star reviews describe support pushing toward enterprise upgrades instead of helping.
 
-**TrackBee.**
+Wish List: Built-in fraud filtering. Hardened Recharge integration.
 
-**What it is:** the fastest-to-deploy server-side tracking for Shopify - five-minute install, no GTM, direct CAPI relay for Meta and Google.
+Value for Money: 7.5/10. The cleanest data-layer fix for complex Shopify + Recharge setups. The per-order tax adds up but the accuracy improvement justifies it for most.
 
-**What it does well:** genuinely recovers abandoned-cart attribution with almost no setup.
+Pricing: Flex $0.35/order; Standard $199/mo (1.5K orders); Pro $449/mo (5K); Plus $990/mo (10K).
 
-**Where it breaks:** zero bot filtering, on the most bot-scraped pages on the internet - every bot add-to-cart relays to Meta as a real conversion signal. Shopify-only, so a WooCommerce or headless store cannot use it. €100/month per store stacks fast for multi-brand merchants, and there is no Google Consent Mode v2 integration.
+---
 
-**Value for money:** 5/10.
+**8. Cometly (CAPI-focused attribution for ad-CRM gap)**
 
-**Pricing:** €100/month per store.
+The Good: AI multi-touch attribution with sub-60-second data latency. Published results: match scores from 4.5 to 9.4, cost-per-qualified-call from $160 to $70. 4.4 stars on Trustpilot. Direct CAPI integration bypasses ad-blocker and browser limits.
 
-**Cometly.**
+Frustrations: Sales-gated pricing. Reported $199 to $499/mo. Pricing model changed twice in two months. Geared at teams spending $20K+/mo. Not a fit for smaller advertisers.
 
-**What it is:** a server-side CAPI relay with AI-driven cross-channel attribution.
+Wish List: Public pricing. Lower entry tier for smaller teams.
 
-**What it does well:** cuts pixel signal loss and gives mid-market paid-social teams a unified attribution dashboard without GTM expertise.
+Value for Money: 7.5/10. If you're spending $20K+/mo on paid ads and your CRM audiences aren't converting the way your CRM says they should, this closes the attribution gap.
 
-**Where it breaks:** no documented bot filtering - every bot conversion fires as a real CAPI event. If a user clicks Reject All the client pixel never fires and the session is simply lost, with no anonymous-analytics fallback.
+Pricing: Reported $199 to $499/mo, sales-gated.
 
-Pricing is opaque: a published **$199**–**$499/month** range against a ~**$500/month** sales floor.
+---
 
-**Value for money:** 5/10.
+**9. Northbeam (multi-touch attribution + CRM signal enrichment)**
 
-**Pricing:** custom, roughly **$199**–**$499/month** entry, ~**$500** floor.
+The Good: Multi-touch attribution, MMM+, profit benchmarks, creative analytics. Most accurate data vs Triple Whale and Polar in head-to-heads. Fresh $15M growth round (2025). Clean integrations across Shopify, Meta, Google, TikTok.
 
-**Analyzify.**
+Frustrations: Starts at $1,500/mo. Stripped support from accounts under $1K/mo. Black-box attribution methodology. Not accessible for sub-$1M ARR brands.
 
-**What it is:** a flat-fee Shopify analytics tracking suite - [GA4](/resources/best-ga4-alternative-2026), Meta CAPI, TikTok, Google Ads server-side.
+Wish List: Starter tier under $500/mo. Transparent attribution methodology.
 
-**What it does well:** claims **99%** purchase-tracking accuracy and strong EMQ improvement; genuinely complete event capture at its price for a sub-10K-orders store.
+Value for Money: 7/10. The right tool for brands spending $50K to $500K+/mo on ads who need to feed accurate attribution data back into their CRM. Below that spend level, skip it.
 
-**Where it breaks:** that **99%** is capture rate, not quality - bot purchases get captured and forwarded right alongside real ones. The **$749**–**$945/year** flat fee looks great until [Stape](/alternative/stape-alternative) hosting (a **$1,490** add-on) or Google Cloud setup (**$2,790**) pushes real cost to **$3,000**–**$4,000/year**. The February 2026 forced upgrade to a "marketing data platform" changed existing customers' interfaces mid-subscription.
+Pricing: Starter from $1,500/mo. Professional and Enterprise custom.
 
-**Value for money:** 6/10.
+---
 
-**Pricing:** **$749**–**$945/year** base, add-ons climb.
+**10. Stape (sGTM hosting, enables CRM server-side events)**
 
-**Conversios.**
+The Good: Cheapest fully-managed sGTM hosting at $17/mo for 500K requests. Power-up ecosystem. Container running in under 10 minutes. Enables server-side Klaviyo, HubSpot, and Salesforce event enrichment via sGTM templates.
 
-**What it is:** a modular server-side tracking stack for Shopify and WooCommerce, billed per order.
+Frustrations: Trustpilot flags predatory renewal terms. Power-ups are a la carte; headline price hides extras. Email-only 2FA still in 2026.
 
-**What it does well:** the broadest ad-platform coverage at its price, separate apps for Meta CAPI, GA4, TikTok, and combined sGTM.
+Wish List: TOTP authenticator-app 2FA. Cleaner self-serve cancellation.
 
-**Where it breaks:** no bot filtering - and because billing is per order, you pay Conversios for every bot-generated order it forwards to the ad platform. The 2026 plan rename added confusion without features, and per-order overages (**$0.15**–**$0.35**) make seasonal bills spike 3–5x.
+Value for Money: 7.5/10. The infrastructure that makes server-side CRM enrichment affordable. Essential if you're on a GTM-based tracking setup.
 
-**Value for money:** 5/10.
+Pricing: Free (10K requests), Pro $17/mo (500K), Business $83/mo (5M), Enterprise $167/mo (20M).
 
-**Pricing:** Server Side Tracking from **$60/month** plus per-order overage.
+---
 
-**Littledata.**
+**11. Triple Whale (Shopify attribution + CRM audience enrichment)**
 
-**What it is:** the no-code server-side tracking pioneer for Shopify.
+The Good: Triple Pixel + Sonar Send (Klaviyo flow enrichment) bundled at $179/mo annual. Free tier. G2 Attribution Leader Spring 2026. Moby AI assistant for ad-hoc questions.
 
-**What it does well:** connects Shopify order and session data to GA4, Google Ads, Meta, TikTok, and Klaviyo in under 10 minutes - the fastest legitimate setup for a store with no GTM resource.
+Frustrations: 140+ tracked attribution outages since February 2024. Support deflects discrepancies to "change your dashboard filters." Pricing scales to GMV-based above $5M GMV. Moby AI has drawn complaints about crashes.
 
-**Where it breaks:** no bot filtering, so the recovered signal volume is a false positive - bot checkouts reach the ad platforms. On Reject All the session is discarded entirely rather than kept as anonymous analytics, which is legal but wasteful. Shopify-only.
+Wish List: Incrementality testing. Clearer SLAs around attribution outages.
 
-**Value for money:** 6/10.
+Value for Money: 6.5/10. The Sonar Send + Klaviyo enrichment is genuinely useful for improving CRM audience quality. But the attribution reliability track record is a concern.
 
-**Pricing:** from **$99/month**, scaling to **$199**–**$299/month** with per-order components.
+Pricing: Free; Starter $179/mo (annual); Advanced $259/mo (annual).
 
-**Hyros.**
+---
 
-**What it is:** the deepest multi-touch attribution stack in direct-response advertising, stitching click IDs across email, calls, and offline.
+**12. DataCops (server-side CAPI + consent + CRM enrichment layer)**
 
-**What it does well:** for high-spend US info-product and SaaS advertisers, it surfaces revenue that GA4 systematically undercounts.
+The Good: CNAME-based first-party analytics on your subdomain. Server-side CAPI to Meta, Google, TikTok, LinkedIn. TCF 2.2 certified consent management. HubSpot integration built in. Fraud traffic filtered before it reaches your CAPI or CRM. IP database covers 361B+ IPs.
 
-**Where it breaks:** it is built for the US market where consent banners are rare. The fbclid and gclid parameters it depends on are suppressed in consent-rejected EU sessions under TCF, so its attribution model breaks down for any EU-serving brand. No self-serve signup - every plan needs a sales demo.
+The part that matters for CRM: when DataCops fires a server-side conversion event, it attaches consent status and IP reputation signals. Your HubSpot or Klaviyo audience for ad retargeting is enriched with compliant, fraud-filtered data. Match quality improves. GDPR exposure from sending bot-generated contacts to Meta Custom Audiences disappears.
 
-**Value for money:** 6/10 US direct-response, 3/10 for EU-serving brands.
+Frustrations: SOC 2 Type II still in progress. Fewer pre-built integrations than enterprise CDPs. Newer brand.
 
-**Pricing:** from **$230/month**, Shopify track from **$69/month**, all demo-gated.
+Wish List: SOC 2 shipped. Wider native connector library.
 
-**[Northbeam](/alternative/northbeam-alternative).**
+Value for Money: 8.5/10. The layer that makes your CRM data complete. One CNAME, one script tag, 5 to 30 minutes. Free tier is real. Recovers 30 to 40% of missing conversions and cleans what gets to your CRM.
 
-**What it is:** granular multi-touch attribution across paid channels with fast feedback.
+Pricing: Free (2K sessions/mo); Growth $7.99/mo; Business $49/mo; Organization $299/mo.
 
-**What it does well:** channel-level ROAS within 24 hours instead of Meta's 3-day window - strong for high-spend DTC media buyers.
+---
 
-**Where it breaks:** its whole model rests on a client-side pixel and cookie stitching, so in a cookieless or consent-heavy EU context it structurally under-counts. The **$1,500/month** starter floor punishes the mid-market brands ($50K–$150K/month media) that most need better attribution. Note: Northbeam feeds budget decisions, it does not relay to Meta CAPI - so its bot contamination stays internal rather than poisoning ad-platform training.
+## The GDPR problem nobody talks about in CRM guides.
 
-**Value for money:** 5/10.
+Here's a thing that should be scaring Shopify merchants but isn't showing up in any CRM comparison guide: sending CRM data to ad platforms without proper consent signals is a GDPR violation.
 
-**Pricing:** Starter **$1,500/month**, higher tiers custom.
+When you export your Klaviyo list to Meta Custom Audiences, you need valid consent for each contact on that list. If a contact signed up through a form that had a pre-checked newsletter box, or if they bought before you had a proper CMP, or if your consent data isn't being captured at the server-side level, you're exposed.
 
-**Polar Analytics.**
+Most Shopify CRM setups don't solve this. They sync contacts and orders. They don't attach consent status. They don't filter bot-generated signups from the list before it goes to Meta.
 
-**What it is:** a warehouse-native Shopify BI layer with a first-party server-side pixel.
+Shopify's Customer Privacy API (launched 2025) helps by enabling consent tracking without a separate CMP. But it only captures the flag. It doesn't enforce it at the server-side event level or prevent non-consented contacts from flowing into ad platform audiences.
 
-**What it does well:** centralizes Shopify, ad, and CRM data into pre-built LTV, cohort, and ROAS dashboards, and recovers 40–**50%** more abandonment events via its CAPI Enhancer.
+A proper consent layer, combined with server-side CAPI and fraud filtering, solves this cleanly: only consented, real-human contacts with valid attribution data flow to your ad platforms.
 
-**Where it breaks:** no bot validation on that enriched stream - the headline **41%** ROAS gain may partly reflect Meta being trained on enriched bot profiles. GMV-based pricing gets expensive fast, and incrementality testing is a separate **$4,000/month** add-on.
+---
 
-**Value for money:** 6/10.
+## What do you actually need?
 
-**Pricing:** from ~**$400/month**, BI module from **$510/month**.
+There's no single best CRM for Shopify. The right answer depends on what your business actually does and what problems you're trying to solve.
 
-**Triple Whale.**
+Here's how I'd think about it:
 
-**What it is:** a Shopify-native analytics, attribution, and CAPI relay, with its Sonar product enriching events for Meta, Google, TikTok, and X.
+- Pure Shopify DTC with email and SMS automation as your primary retention lever? Klaviyo is the obvious pick. The 22% GMV growth stat is earned.
 
-**What it does well:** the most complete Shopify attribution and CAPI stack in the SMB range, with Klaviyo integration and an AI agent layer.
+- Multi-channel business with a sales team, B2B component, or multiple revenue streams beyond Shopify? HubSpot wins on CRM depth. Just accept you'll need supplementary tools for ecommerce-specific flows.
 
-**Where it breaks:** no bot filtering anywhere in the pixel or Sonar relay - Sonar enriches bot events with first-party Shopify fields and sends them to Meta with higher confidence, which can make algorithm training worse, not better. GMV-based pricing escalates sharply above $5M revenue.
+- Enterprise brand running multiple Shopify storefronts with complex sales structures? Salesforce + Commerce Cloud. Budget for the implementation.
 
-**Value for money:** 6/10 - more signal, but also more noise.
+- Budget-constrained and ecommerce depth isn't critical? Zoho or ActiveCampaign. You're giving up flow sophistication but the core CRM functionality works.
 
-**Pricing:** Starter **$179/month**, Advanced **$259/month**, custom above $5M GMV.
+- Running Shopify with Recharge subscriptions? Add Littledata to your stack regardless of which CRM you pick. The subscription event tracking is the gap everything else misses.
 
-## Decision guide
+- Spending $20K+/mo on paid ads and CRM audience quality is hurting ROAS? Add Cometly or Northbeam for attribution enrichment. The match quality improvement justifies the cost at that spend level.
 
-Pure ecommerce brand living on lifecycle email and flows - Klaviyo as your CRM.
+- Want to stop losing 30 to 40% of conversions to ad blockers and iOS Safari before they even reach your CRM? Server-side CAPI with a first-party CNAME is the fix. DataCops does this on Shopify starting at $7.99/mo and feeds enriched, consent-compliant, fraud-filtered events to your CRM and ad platforms.
 
-Shopify store with a real sales motion or B2B side - HubSpot as your CRM.
+One thing is true across all of these: picking the right CRM gets you 40% of the way there. The other 60% is the data flowing into it. Server-side tracking, consent management, identity resolution. That's the part no CRM guide talks about.
 
-Large, complex org with enterprise governance needs - Salesforce.
-
-Tiny store that needs a CRM without a budget line - Zoho.
-
-You want the deepest Shopify event capture and accept that you must add a quality layer - Elevar for capture, DataCops for filtering.
-
-You serve EU traffic and consent across the stack is a mess - DataCops in front; most CAPI tools here do consent badly or not at all.
-
-Your reported conversions look healthy but ROAS is sliding - your pipeline is forwarding bots. Filter at ingestion with DataCops, then let your CRM do its job.
-
-## Your CRM is innocent. Your pipeline is the problem.
-
-The mistake I watch Shopify operators make is benchmarking CRMs against each other - HubSpot versus Klaviyo, feature by feature - while the actual leak is one layer upstream, in a tracking pipeline nobody ever audited. You can pick the perfect CRM and still fill it with bot contacts, blocked sessions, and unconsented data, because the CRM only ever sees what the pipeline hands it.
-
-A CRM is a destination. It cannot clean a stream it sits downstream of. Filtering has to happen at ingestion, first-party, before the data ever leaves your infrastructure - and no CRM on this list does that.
-
-So before you spend another week comparing CRM feature grids, pull up your store's last month of data and answer one question: of the customer events that synced to your CRM and on to Meta, how many were real humans? If you do not know, you do not have a CRM problem. You have a pipeline you have never once inspected.
+Now your turn. What CRM are you running with Shopify, and what's the data quality actually like? Are you seeing the attribution gap show up in your CRM records? Drop it below.
 
 ---
 
